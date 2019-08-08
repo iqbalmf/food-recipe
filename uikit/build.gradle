@@ -1,0 +1,40 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply from: '../default-config.gradle'
+
+android {
+    dataBinding{
+        enabled = true
+    }
+
+}
+
+dependencies {
+
+    def appDependencies = rootProject.ext.appDependencies
+    def testDependencies = rootProject.ext.testDependencies
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation rootProject.ext.kotlin
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.core:core-ktx:1.0.2'
+
+    implementation appDependencies.constraintLayout
+
+    implementation appDependencies.recyclerView
+    implementation appDependencies.rxKotlin
+
+    implementation appDependencies.lifeCycleExtensions
+
+    implementation appDependencies.dagger
+    implementation appDependencies.daggerAndroid
+
+    kapt appDependencies.daggerCompiler
+    kapt appDependencies.daggerAndroidProcessor
+
+    testImplementation testDependencies.jUnit
+    androidTestImplementation testDependencies.androidTestRunner
+}
